@@ -18,7 +18,7 @@ def falling(n, k):
         return 1
     for i in range(1, k):
         n = n-1
-        factor = factor * n
+        factor *= n
     return factor
 
 
@@ -39,15 +39,11 @@ def sum_digits(y):
     """
 
 # "*** YOUR CODE HERE ***"
-
     y = str(y)
-    lenght = len(y)
-    asx = list(y)
+   
     sum = 0
-    for i in range(0, lenght):
-        asx[i] = int(asx[i])
-    for i in range(0, lenght):
-        sum = sum + asx[i]
+    for i in y:
+        sum += int(i)
     return sum
 
 
@@ -71,5 +67,4 @@ def double_eights (n):
 
 # "*** YOUR CODE HERE ***"
 
-    n = str(n)
-    return '88' in n
+    return '88' in str(n)

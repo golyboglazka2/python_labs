@@ -15,3 +15,35 @@
 
 # Создать рецепт своего бургера, по вашему вкусу.
 # Если не хватает ингридиентов - создать соответствующие функции в модуле my_burger
+
+import my_burger
+
+ingredients_list = []
+coma = ', '
+
+for name, is_added in my_burger.ingredients.items():
+    ingredients_list.append(name)
+print()
+print('Список доступных ингридиентов: ', coma.join(ingredients_list))
+print()
+
+my_ingredients = []
+
+
+def cheeseburger(ingredients):
+    my_burger.add_bun(ingredients)
+    my_burger.add_cutlet(ingredients)
+    my_burger.add_cucumber(ingredients)
+    my_burger.add_cheese(ingredients)
+    my_burger.add_cutlet(ingredients)
+    my_burger.add_sauce(ingredients)
+    my_burger.add_bun(ingredients)
+
+cheeseburger(my_burger.ingredients)
+
+for name, is_added in my_burger.ingredients.items():
+    if is_added:
+        my_ingredients.append(name)
+
+print()
+print('Ваш бутерброд состоит из: ', coma.join(my_ingredients))
