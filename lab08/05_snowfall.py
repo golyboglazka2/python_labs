@@ -32,7 +32,7 @@ for _ in range(n):
     x_list.append(x_points)  # запись координат х в список (на последнее место)
     y_list.append(y_points)  
     lengths = sd.random_number(10, 40)  # рандомный размер снежинки
-    factor_aa = round(uniform(0.3, 0.7), 2)  # рандомное место ответвления лучиков
+    factor_aa = round(uniform(0.3, 0.9), 2)  # рандомное место ответвления лучиков
     factor_bb = round(uniform(0.25, 0.45), 2)  # рандомная длина лучиков
     factor_cc = sd.random_number(10, 100)  # рандомный угол отклонения лучиков
     l_list.append(lengths)  # запись координат размера снежинок в список
@@ -53,7 +53,7 @@ while True:
         fac_b = b_list[i]
         fac_c = c_list[i]
         l_length = l_list[i]
-        snowf(center=point,length=l_length, color=sd.COLOR_RED, factor_a=fac_a, factor_b=fac_b, factor_c=fac_c)  # вызываем ф-цию отрисовки снежинки
+        snowf(center=point,length=l_length, color=sd.COLOR_BLUE, factor_a=fac_a, factor_b=fac_b, factor_c=fac_c)  # вызываем ф-цию отрисовки снежинки
         y_list[i] -= 44  # падаем на 10 пикс.
         # x_list[i] += .5
         if y_list[i] < 50:  # проверка упала ли снежинка
@@ -61,7 +61,7 @@ while True:
         point1 = sd.get_point(x_list[i], y_list[i])
         snowf(center=point1, length=l_length, color=sd.COLOR_WHITE, factor_a=fac_a, factor_b=fac_b,
               factor_c=fac_c)  # вызываем ф-цию отрисовки снежинки
-        sd.sleep(0.01)  # таймаут
+        sd.sleep(0.02)  # таймаут
     if sd.user_want_exit():
         break
     sd.clear_screen()
