@@ -16,33 +16,61 @@ import simple_draw as sd
 
 # TODO здесь ваш код
 
-def n_angle(start_x, start_y, rotation, size, angles, color):
-    start = sd.get_point(start_x, start_y)
-    for i in range (rotation, rotation+360, (360//angles)):
-        start = sd.vector(start, i, size, color=colors[color], width=3)
+color_rainbow = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN,
+                 sd.COLOR_CYAN, sd.COLOR_BLUE, sd.COLOR_PURPLE)
+
+def vector(vector_start, length, angle):
+    v = sd.get_vector(vector_start, angle, length)
+    return v.end_point
 
 
-def color_choice():
-    n=0
-    while n not in range(1,7):
-        n = int(input('Choose a color:\n   1-White\n   2-Black\n   3-Red\n   4-Blue\n   5-Green\n   6-Yellow\n>>>'))
-    return n-1
-    
-
-colors=[sd.COLOR_WHITE, 
-sd.COLOR_BLACK, 
-sd.COLOR_RED, 
-sd.COLOR_BLUE, 
-sd.COLOR_GREEN, 
-sd.COLOR_YELLOW]
-
-
-sd.resolution = (1200, 600)
-n=color_choice()
-start_x, start_y = 100, 200
-for i in range(3, 7, 1):
-    n_angle(start_x, start_y, 0, 100, i, n)
-    start_x+=200
+def polygon(point, heads, length, color):
+    angle = 0
+    angle_start = 0
+    angle_polygon = 360 / heads
+    point_polygon = point
+    color_paint = color_rainbow[color - 1]
+    for _ in range(heads):
+        if _ == 0:
+            angle = angle_start
+        else:
+            angle += angle_polygon
+        if _ < (heads - 1):
+            end_point = vector(point, length, angle)
+        else:
+            end_point = point_polygon
+        sd.line(start_point=point, end_point=end_point, color=color_paint, width=1)
+        point = end_point
 
 
+# (point_start_x, point_start_y, length_start, type_of_polygon)
+start_point = [(100, 100, 150, 3), (400, 100, 150, 4), (100, 350, 100, 5), (400, 350, 100, 6)]
+color_input = 1
+
+while color_input:
+    color_input = input('Возможные цвета:\n'
+                        '   0: Выход из программы.\n'
+                        '   1: Красный\n'
+                        '   2: Оранжевый\n'
+                        '   3: Жёлтый\n'
+                        '   4: Зелёный\n'
+                        '   5: Голубой\n'
+                        '   6: Синий\n'
+                        '   7: фиолетовый\n')
+    if color_input.isnumeric():
+        color_input = int(color_input)
+        if color_input == 0:
+            break
+        elif color_input < 0 or color_input > 7:
+            print('Неверный ввод')
+            continue
+    else:
+        print('Неверный ввод')
+        continue
+    for _ in start_point:
+        point_start = sd.get_point(_[0], _[1])
+        length_start = _[2]
+        heads_start = _[3]
+        polygon(point_start, heads_start, length_start, color_input)
+    break
 sd.pause()
