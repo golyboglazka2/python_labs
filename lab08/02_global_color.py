@@ -19,6 +19,7 @@ import simple_draw as sd
 color_rainbow = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN,
                  sd.COLOR_CYAN, sd.COLOR_BLUE, sd.COLOR_PURPLE)
 
+
 def vector(vector_start, length, angle):
     v = sd.get_vector(vector_start, angle, length)
     return v.end_point
