@@ -21,90 +21,125 @@
 
 # TODO здесь ваш код
 
+# TODO здесь ваш код
+class Water:
+    def __str__(self):
+        return ' вода '
 
+    def __add__(self, other):
+        if isinstance(other, Air):
+            return Storm(part1=self, part2=other)
+        elif isinstance(other, Fire):
+            return Steam(self, other)
+        elif isinstance(other, Earth):
+            return Dirt(self, other)
+        
+
+
+class Air:
+    def __str__(self):
+        return ' воздух '
+
+    def __add__(self, other):
+        if isinstance(other, Water):
+            return Storm(part1=self, part2=other)
+        elif isinstance(other, Fire):
+            return Lightning(part1=self, part2=other)
+        elif isinstance(other, Earth):
+            return Dust(part1=self, part2=other)
+
+
+class Fire:
+    def __str__(self):
+        return ' огонь '
+
+    def __add__(self, other):
+        if isinstance(other, Water):
+            return Steam(part1=self, part2=other)
+        elif isinstance(other, str):
+            return other + ' ' + str(self)
+        elif isinstance(other, Air):
+            return Lightning(part1=self, part2=other)
+        elif isinstance(other, Earth):
+            return Lava(part1=self, part2=other)
+
+
+class Earth:
+    def __str__(self):
+        return ' земля '
+
+    def __add__(self, other):
+        if isinstance(other, Water):
+            return Dirt(part1=self, part2=other)
+        elif isinstance(other, Air):
+            return Dust(part1=self, part2=other)
+        elif isinstance(other, Fire):
+            return Lava(part1=self, part2=other)
+
+
+# class Solod:
+#     def __str__(self):
+#         return ' солода '
+
+
+
+class Storm:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Шторм состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+class Steam:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Пар состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+class Dirt:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Грязь состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+class Lightning:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Молния состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+class Dust:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Пыль состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+class Lava:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Лава состоит из' + str(self.part1) + 'и' + str(self.part2)
+
+
+print(Earth() + Fire())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
 # Придумать что будет при сложении существующих элементов с новым.
 
-class Fire:
- 
-    title = 'Огонь'
- 
-    def __add__(self, other):
-        if isinstance(other, Air):
-            return Lightning()
-        elif isinstance(other, Water):
-            return Steam()
-        elif isinstance(other, Earth):
-            return Lava()
- 
- 
-class Air:
- 
-    title = 'Воздух'
- 
-    def __add__(self, other):
-        if isinstance(other, Water):
-            return Shtorm()
-        elif isinstance(other, Fire):
-            return Lightning()
-        elif isinstance(other, Earth):
-            return Dust()
- 
- 
-class Water:
- 
-    title = 'Вода'
- 
-    def __add__(self, other):
-        if isinstance(other, Air):
-            return Shtorm()
-        elif isinstance(other, Fire):
-            return Steam()
-        elif isinstance(other, Earth):
-            return Dirt()
- 
- 
-class Earth:
- 
-    title = 'Земля'
- 
-    def __add__(self, other):
-        if isinstance(other, Water):
-            return Dirt()
-        elif isinstance(other, Fire):
-            return Lava()
-        elif isinstance(other, Air):
-            return Dust()
- 
- 
-class Shtorm:
-    title = 'Шторм'
- 
- 
-class Steam:
-    title = 'Пар'
- 
- 
-class Dirt:
-    title = 'Грязь'
- 
- 
-class Lightning:
-    title = 'Молния'
- 
- 
-class Dust:
-    title = 'Пыль'
- 
- 
-class Lava :
-    title = 'Лава'
- 
- 
-# f = Water()
-# a = Air()
-# s = f + a
- 
-# print(f"Смешиваем '{f.title}' c '{a.title}' и получаем '{s.title}'")

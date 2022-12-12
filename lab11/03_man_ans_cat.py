@@ -43,57 +43,57 @@ class Man:
  
     def eat(self):
         if self.house.food >= 10:
-            cprint('{} поел'.format(self.name), color='yellow')
+            cprint('{}: поел'.format(self.name))
             self.fullness += 10
             self.house.food -= 10
         else:
-            cprint('{} нет еды'.format(self.name), color='red')
- 
+            cprint('{}: нет еды :('.format(self.name))
+  
     def work(self):
-        cprint('{} сходил на работу'.format(self.name), color='blue')
+        cprint('{}: сходил на работу'.format(self.name))
         self.house.money += 150
         self.fullness -= 10
  
     def watch_mtv(self):
-        cprint('{} смотрел MTV целый день'.format(self.name), color='green')
+        cprint('{}: пытался сдать лабы'.format(self.name))
         self.fullness -= 10
  
     def shopping(self):
         if self.house.money >= 50:
-            cprint('{} сходил в магазин за едой'.format(self.name), color='magenta')
+            cprint('{}: сходил в магазин за едой'.format(self.name))
             self.house.money -= 50
             self.house.food += 50
         else:
-            cprint('{} деньги кончились!'.format(self.name), color='red')
+            cprint('{}: деньги кончились!'.format(self.name))
  
     def go_to_the_house(self, house):
         self.house = house
         self.fullness -= 10
-        cprint('{} Вьехал в дом'.format(self.name), color='cyan')
+        cprint('{}: Вьехал в дом'.format(self.name))
  
     def pick_up_a_cat(self, cat):
         cat.house = self.house
-        cprint(f'{self.name} подобрал {cat.name}', color='white')
+        cprint(f'{self.name}: подобрал {cat.name}')
  
     def buy_cat_food(self):
         if self.house.money >= 50:
-            cprint(f'{self.name} сходил за едой коту', color='magenta')
+            cprint(f'{self.name}: сходил за едой коту')
             self.house.cat_food += 50
             self.house.money -= 50
         else:
-            cprint(f'{self.name} деньги кончились!', color='red')
+            cprint(f'{self.name}: деньги кончились!')
  
     def cleaning(self):
         if self.house.mud >= 100:
-            cprint(f'{self.name} убрался в доме', color='green')
+            cprint(f'{self.name}: убрался в доме')
             self.house.mud -= 100
             self.fullness -= 20
         else:
-            cprint(f'{self.name}! В квартире очень грязно!', color='red')
+            cprint(f'{self.name}! В квартире очень грязно!')
  
     def act(self):
         if self.fullness <= 0:
-            cprint('{} умер...'.format(self.name), color='red')
+            cprint('{}: R.I.P...'.format(self.name))
             return
         dice = randint(1, 6)
         if self.house.money < 50:
@@ -128,29 +128,29 @@ class Cat:
  
     def cat_sleep(self):
         self.cat_fullness -= 10
-        cprint(f'{self.name} спал весь день', color='green')
+        cprint(f'{self.name}: спал весь день')
  
     def go_to_the_house(self, house):
         self.house = house
         self.cat_fullness -= 10
-        cprint(f'{self.name} въехал в дом', color='cyan')
+        cprint(f'{self.name}: въехал в дом')
  
     def eat(self):
         if self.house.cat_food >= 0:
             self.cat_fullness += 20
             self.house.cat_food -= 10
-            cprint(f'{self.name} поел', color='green')
+            cprint(f'{self.name}: покушал :)')
         else:
-            cprint(f'У котиков нет еды', color='red')
+            cprint(f'У котиков нет еды. :( ')
  
     def destroy_wallpaper(self):
         self.cat_fullness -= 10
         self.house.mud += 5
-        cprint(f'{self.name} драл обои', color='green')
+        cprint(f'{self.name}: драл обои')
  
     def act(self):
         if self.cat_fullness <= 0:
-            cprint(f'{self.name} умер...', color='red')
+            cprint(f'{self.name}: R.I.P...')
             return
         dice_cat = randint(1, 6)
         if self.cat_fullness < 20:
@@ -172,16 +172,16 @@ class House:
         self.mud = 0
  
     def __str__(self):
-        return f'В доме:\nеды - {self.food}\nденег - {self.money}\nкошачей еды - {self.cat_food}\nзагрязненность - {self.mud}'
+        return f'\nВ доме:\n >>> еды - {self.food}\n >>> денег - {self.money}\n >>> кошачей еды - {self.cat_food}\n >>> загрязненность - {self.mud}'
  
  
 citizens = [
-    Man(name='Вася'),
+    Man(name='Человечик'),
             ]
  
 cats = [
-    Cat(name='Ешка'),
-    Cat(name='Гриндерс'),
+    Cat(name='Барсик'),
+    Cat(name='Кузя'),
         ]
  
  
@@ -195,13 +195,14 @@ for citisen in citizens:
     citisen.go_to_the_house(house=my_sweet_home)
  
 for day in range(1, 366):
-    print('================ день {} ================'.format(day))
+    print('\n_____________________ ДЕНЬ {} _____________________\n'.format(day))
     for citisen in citizens:
         citisen.act()
-    print('---------------- в конце дня ----------------')
+    print('\n_____________________ ИТОГИ ДНЯ _____________________\n')
     for citisen in citizens:
         print(citisen)
     print(my_sweet_home)
+
 
 # Усложненное задание (делать по желанию)
 # Создать несколько (2-3) котов и подселить их в дом к человеку.

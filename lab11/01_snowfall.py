@@ -14,45 +14,17 @@
 #     # TODO здесь ваш код
 
 
-# flake = Snowflake()
-
-# while True:
-#     flake.clear_previous_picture()
-#     flake.move()
-#     flake.draw()
-#     if not flake.can_fall():
-#         break
-#     sd.sleep(0.1)
-#     if sd.user_want_exit():
-#         break
-
-# # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
-# # flakes = get_flakes(count=N)  # создать список снежинок
-# # while True:
-# #     for flake in flakes:
-# #         flake.clear_previous_picture()
-# #         flake.move()
-# #         flake.draw()
-# #     fallen_flakes = get_fallen_flakes()  # подчитать сколько снежинок уже упало
-# #     if fallen_flakes:
-# #         append_flakes(count=fallen_flakes)  # добавить еще сверху
-# #     sd.sleep(0.1)
-# #     if sd.user_want_exit():
-# #         break
-
-# sd.pause()
-
 import simple_draw as sd
 import random
 
-sd.resolution = (1400, 900)
+sd.resolution = (1000, 700)
 N = 20
 
 class SnowFlake:
     def __init__(self):
-        self.x = random.choice([x_value for x_value in range(100, 1100, 50)])
-        self.y = random.choice([y_value for y_value in range(800, 1900, 55)])
-        self.size_ray = random.choice([size_value for size_value in range(10, 50, 2)])
+        self.x = random.choice([x_value for x_value in range(100, 1100, 150)])
+        self.y = random.choice([y_value for y_value in range(800, 2000, 35)])
+        self.size_ray = random.choice([size_value for size_value in range(30, 45, 6)])
         self.color = sd.COLOR_WHITE
 
 
@@ -101,7 +73,7 @@ def append_flakes(fallen_flakes):
 
 
 def remove_flakes(fallen_flakes, snowflakes):
-    for i in range(len(fallen_flakes) - 1, -1, -1):
+    for i in range(len(fallen_flakes) - 5, -5, -5):
         if i in fallen_flakes:
             del snowflakes[i]
 
@@ -119,7 +91,7 @@ while True:
         remove_flakes(fallen_flakes, snowflakes=flakes)   
 
     sd.finish_drawing()
-    sd.sleep(0.1)
+    sd.sleep(0.06)
     if sd.user_want_exit():
         break
 
