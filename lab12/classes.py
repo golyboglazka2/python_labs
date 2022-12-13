@@ -24,11 +24,9 @@ class Card:
         500
         """
         "*** YOUR CODE HERE ***"
-
         self.name = name
         self.attack = attack
         self.defense = defense
-
 
     def power(self, opponent_card):
         """
@@ -47,14 +45,13 @@ class Card:
         -100
         """
         "*** YOUR CODE HERE ***"
-        return self.attack - opponent_card.defense / 2
+        return self.attack - opponent_card.defense
 
     def effect(self, opponent_card, player, opponent):
         """
         Cards have no default effect.
         """
-        # return
-        pass
+        return
 
     def __repr__(self):
         """
@@ -150,7 +147,6 @@ class AICard(Card):
         Once you have finished writing your code for this problem,
         set implemented to True so that the text is printed when
         playing an AICard.
-
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
         >>> opponent_card = Card("other", 500, 500)
@@ -165,10 +161,9 @@ class AICard(Card):
         True
         """
         "*** YOUR CODE HERE ***"
-        
-        
-        implemented = False
-        # You should add your implementation above this.
+        implemented = True
+        player.hand.append(player.deck.cards.pop())
+        player.hand.append(player.deck.cards.pop())
         if implemented:
             print(f"{self.name} allows me to draw two cards!")
 
@@ -190,7 +185,6 @@ class TutorCard(Card):
         not add any cards, but still loses the round.  To
         implement the second part of this effect, a Tutor
         card's power should be less than all non-Tutor cards.
-
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
         >>> opponent_card = Card("other", 500, 500)
@@ -211,6 +205,13 @@ class TutorCard(Card):
         """
         "*** YOUR CODE HERE ***"
         added = False
+        length = len(player.hand)
+        if length > 0:
+            player.hand.append(player.hand[0].copy())
+            added = True
+        else:
+            self.attack = -1
+            self.defense = -1
         # You should add your implementation above this.
         if added:
             print(f"{self.name} allows me to add a copy of a card to my hand!")
@@ -232,7 +233,6 @@ class TACard(Card):
         Discard the card with the highest `power` in your hand,
         and add the discarded card's attack and defense
         to this card's own respective stats.
-
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
         >>> opponent_card = Card("other", 500, 500)
@@ -250,7 +250,20 @@ class TACard(Card):
         600 500
         """
         "*** YOUR CODE HERE ***"
+        if not len(player.hand):
+            return
         best_card = None
+        max_power = -1000000
+        for card in player.hand:
+            if card.cardtype == 'Staff':
+                power = card.power(opponent_card)
+                if power > max_power:
+                    max_power = power
+                    best_card = card
+        if best_card in player.hand:
+            player.hand.remove(best_card)
+            self.attack += best_card.attack
+            self.defense += best_card.defense
         # You should add your implementation above this.
         if best_card:
             print(f"{self.name} discards {best_card.name} from my hand to increase its own power!")
@@ -271,7 +284,6 @@ class InstructorCard(Card):
         attack or defense at the end of a round. At the beginning of the round,
         its attack and defense are permanently reduced by 1000 each.
         If this card would survive, it is added back to the hand.
-
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
         >>> opponent_card = Card("other", 500, 500)
@@ -290,6 +302,14 @@ class InstructorCard(Card):
         """
         "*** YOUR CODE HERE ***"
         re_add = False
+        self.defense -= 1000
+        self.attack -= 1000
+        if self.attack >= 0 or self.defense >= 0:
+            re_add = True
+            player.hand.append(self)
+        else:
+            if self in player.hand:
+                player.hand.remove(self)
         # You should add your implementation above this.
         if re_add:
             print(f"{self.name} returns to my hand!")
