@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-
-from Lab_14.var_7 import models
+import models
 
 
 engine = create_engine('sqlite:///sqlite3.db')

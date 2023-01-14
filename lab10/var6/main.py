@@ -52,7 +52,7 @@ while True:
         sheet = wb.active
         for i in data:
             sheet.append(i)
-        path = os.path.join(path, '../../Lab_10/6_task_option/results.xlsx')
+        path = os.path.join(path, '../../lab10/var6/results.xlsx')
         wb.save(path)
 
         sg.popup("Результаты успешно сохранены")
